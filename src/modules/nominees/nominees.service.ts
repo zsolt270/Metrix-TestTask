@@ -1,0 +1,11 @@
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Nominee } from './nominee.schema';
+import { Model } from 'mongoose';
+
+@Injectable()
+export class NomineesService {
+  constructor(
+    @InjectModel(Nominee.name) private nomineeModel: Model<Nominee>,
+  ) {}
+}
