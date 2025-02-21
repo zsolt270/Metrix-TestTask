@@ -10,5 +10,8 @@ export class NomineesService {
     @InjectModel(Nominee.name) private nomineeModel: Model<Nominee>,
   ) {}
 
-  createNominee(createNomineeDto: CreateNomineeDto) {}
+  createNominee(createNomineeDto: CreateNomineeDto) {
+    const newNominee = new this.nomineeModel(createNomineeDto);
+    return newNominee.save();
+  }
 }
