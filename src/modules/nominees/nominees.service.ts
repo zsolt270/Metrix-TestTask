@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Nominee } from './nominee.schema';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { CreateNomineeDto } from './dto/createNominee.dto';
 
 @Injectable()
@@ -27,5 +27,19 @@ export class NomineesService {
     return winners.map((winner) => {
       return { movieTitle: winner.movieTitle, isWinner: winner.isWinner };
     });
+  }
+
+  async getNominee(id: string) {
+    const isValidId = mongoose.Types.ObjectId.isValid(id);
+    if (!isValidId) throw new HttpException('Nominee not found!', 404);
+
+    const foundNominee = await this.nomineeModel.findById(id);
+    if (!foundNominee) throw new HttpException('Nominee not found!', 404);
+    return {
+      movieTitle: foundNominee.movieTitle,
+      description: foundNominee.description,
+      releaseDate: foundNominee.releaseDate,
+      director: foundNominee.director,
+    };
   }
 }

@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
   UsePipes,
   ValidationPipe,
@@ -28,5 +29,10 @@ export class NomineesController {
   @Get('winners')
   getWinners() {
     return this.nomineeService.getWinners();
+  }
+
+  @Get(':id')
+  getNominee(@Param('id') id: string) {
+    return this.nomineeService.getNominee(id);
   }
 }
