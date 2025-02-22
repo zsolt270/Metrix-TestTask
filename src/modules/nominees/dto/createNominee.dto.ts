@@ -1,6 +1,6 @@
 import {
   IsBoolean,
-  IsDate,
+  IsDateString,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -22,7 +22,7 @@ export class CreateNomineeDto {
   description?: string;
 
   @IsNotEmpty()
-  @IsDate()
+  @IsDateString()
   releaseDate: Date;
 
   @IsNotEmpty()
