@@ -5,12 +5,14 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
 import { CreateNomineeDto } from './dto/createNominee.dto';
 import { NomineesService } from './nominees.service';
 import { UpdateNomineeDto } from './dto/updateNominee.dto';
+import { GetNomineesDto } from './dto/getNominees.dto';
 
 @Controller('nominees')
 export class NomineesController {
@@ -24,8 +26,8 @@ export class NomineesController {
   }
 
   @Get()
-  getNominees() {
-    return this.nomineeService.getNominees();
+  getNominees(@Query() getNomineesDto: GetNomineesDto) {
+    return this.nomineeService.getNominees(getNomineesDto);
   }
 
   // @Get('winners')

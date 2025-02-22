@@ -4,6 +4,7 @@ import { Nominee } from './nominee.schema';
 import { Model } from 'mongoose';
 import { CreateNomineeDto } from './dto/createNominee.dto';
 import { UpdateNomineeDto } from './dto/updateNominee.dto';
+import { GetNomineesDto } from './dto/getNominees.dto';
 
 @Injectable()
 export class NomineesService {
@@ -16,8 +17,11 @@ export class NomineesService {
     return newNominee.save();
   }
 
-  async getNominees() {
-    const nominees = await this.nomineeModel.find();
+  async getNominees(getNomineesDto: GetNomineesDto) {
+    const nominees = await this.nomineeModel
+      .find()
+      .skip(getNomineesDto.skip)
+      .limit(getNomineesDto.limit);
     return nominees.map((nominee) => {
       return { movieTitle: nominee.movieTitle, isWinner: nominee.isWinner };
     });
