@@ -3,12 +3,14 @@ import {
   Controller,
   Get,
   Param,
+  Patch,
   Post,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
 import { CreateNomineeDto } from './dto/createNominee.dto';
 import { NomineesService } from './nominees.service';
+import { UpdateNomineeDto } from './dto/updateNominee.dto';
 
 @Controller('nominees')
 export class NomineesController {
@@ -34,5 +36,14 @@ export class NomineesController {
   @Get(':id')
   getNominee(@Param('id') id: string) {
     return this.nomineeService.getNominee(id);
+  }
+
+  @Patch(':id')
+  @UsePipes(new ValidationPipe())
+  updateNominee(
+    @Param('id') id: string,
+    @Body() updateNomineeDto: UpdateNomineeDto,
+  ) {
+    return this.nomineeService.updateNominee(id, updateNomineeDto);
   }
 }

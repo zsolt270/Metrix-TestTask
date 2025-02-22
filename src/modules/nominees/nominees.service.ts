@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Nominee } from './nominee.schema';
 import mongoose, { Model } from 'mongoose';
 import { CreateNomineeDto } from './dto/createNominee.dto';
+import { UpdateNomineeDto } from './dto/updateNominee.dto';
 
 @Injectable()
 export class NomineesService {
@@ -31,7 +32,7 @@ export class NomineesService {
 
   async getNominee(id: string) {
     const isValidId = mongoose.Types.ObjectId.isValid(id);
-    if (!isValidId) throw new HttpException('Nominee not found!', 404);
+    if (!isValidId) throw new HttpException('Invalid ID!', 400);
 
     const foundNominee = await this.nomineeModel.findById(id);
     if (!foundNominee) throw new HttpException('Nominee not found!', 404);
@@ -41,5 +42,18 @@ export class NomineesService {
       releaseDate: foundNominee.releaseDate,
       director: foundNominee.director,
     };
+  }
+
+  async updateNominee(id: string, updateNomineeDto: UpdateNomineeDto) {
+    const isValidId = mongoose.Types.ObjectId.isValid(id);
+    if (!isValidId) throw new HttpException('Invalid ID!', 400);
+
+    const updatedNominee = await this.nomineeModel.findByIdAndUpdate(
+      id,
+      updateNomineeDto,
+      { new: true },
+    );
+    if (!updatedNominee) throw new HttpException('Nominee not found!', 404);
+    return updatedNominee;
   }
 }
