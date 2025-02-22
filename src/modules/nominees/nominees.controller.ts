@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   Post,
   UsePipes,
   ValidationPipe,
@@ -17,5 +18,15 @@ export class NomineesController {
   createNominee(@Body() createNomineeDto: CreateNomineeDto) {
     console.log(createNomineeDto);
     return this.nomineeService.createNominee(createNomineeDto);
+  }
+
+  @Get()
+  getNominees() {
+    return this.nomineeService.getNominees();
+  }
+
+  @Get('winners')
+  getWinners() {
+    return this.nomineeService.getWinners();
   }
 }

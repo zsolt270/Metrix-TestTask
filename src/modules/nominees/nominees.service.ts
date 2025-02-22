@@ -14,4 +14,18 @@ export class NomineesService {
     const newNominee = new this.nomineeModel(createNomineeDto);
     return newNominee.save();
   }
+
+  async getNominees() {
+    const nominees = await this.nomineeModel.find();
+    return nominees.map((nominee) => {
+      return { movieTitle: nominee.movieTitle, isWinner: nominee.isWinner };
+    });
+  }
+
+  async getWinners() {
+    const winners = await this.nomineeModel.find({ isWinner: true });
+    return winners.map((winner) => {
+      return { movieTitle: winner.movieTitle, isWinner: winner.isWinner };
+    });
+  }
 }
