@@ -1,7 +1,7 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Nominee } from './nominee.schema';
-import mongoose, { Model } from 'mongoose';
+import { Model } from 'mongoose';
 import { CreateNomineeDto } from './dto/createNominee.dto';
 import { UpdateNomineeDto } from './dto/updateNominee.dto';
 
@@ -23,17 +23,14 @@ export class NomineesService {
     });
   }
 
-  async getWinners() {
-    const winners = await this.nomineeModel.find({ isWinner: true });
-    return winners.map((winner) => {
-      return { movieTitle: winner.movieTitle, isWinner: winner.isWinner };
-    });
-  }
+  // async getWinners() {
+  //   const winners = await this.nomineeModel.find({ isWinner: true });
+  //   return winners.map((winner) => {
+  //     return { movieTitle: winner.movieTitle, isWinner: winner.isWinner };
+  //   });
+  // }
 
   async getNominee(id: string) {
-    const isValidId = mongoose.Types.ObjectId.isValid(id);
-    if (!isValidId) throw new HttpException('Invalid ID!', 400);
-
     const foundNominee = await this.nomineeModel.findById(id);
     if (!foundNominee) throw new HttpException('Nominee not found!', 404);
     return {
@@ -45,9 +42,6 @@ export class NomineesService {
   }
 
   async updateNominee(id: string, updateNomineeDto: UpdateNomineeDto) {
-    const isValidId = mongoose.Types.ObjectId.isValid(id);
-    if (!isValidId) throw new HttpException('Invalid ID!', 400);
-
     const updatedNominee = await this.nomineeModel.findByIdAndUpdate(
       id,
       updateNomineeDto,

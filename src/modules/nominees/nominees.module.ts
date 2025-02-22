@@ -1,8 +1,14 @@
-import { Module } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Nominee, NomineeSchema } from './nominee.schema';
 import { NomineesService } from './nominees.service';
 import { NomineesController } from './nominees.controller';
+import { IdValidatorMiddleware } from 'src/common/middleware/idValidator.middleware';
 
 @Module({
   imports: [
@@ -16,4 +22,15 @@ import { NomineesController } from './nominees.controller';
   controllers: [NomineesController],
   providers: [NomineesService],
 })
-export class NomineesModule {}
+export class NomineesModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(IdValidatorMiddleware).forRoutes({
+      path: 'nominees/:id',
+      method: RequestMethod.PATCH,
+    });
+    consumer.apply(IdValidatorMiddleware).forRoutes({
+      path: 'nominees/:id',
+      method: RequestMethod.GET,
+    });
+  }
+}

@@ -28,10 +28,10 @@ export class NomineesController {
     return this.nomineeService.getNominees();
   }
 
-  @Get('winners')
-  getWinners() {
-    return this.nomineeService.getWinners();
-  }
+  // @Get('winners')
+  // getWinners() {
+  //   return this.nomineeService.getWinners();
+  // }
 
   @Get(':id')
   getNominee(@Param('id') id: string) {
