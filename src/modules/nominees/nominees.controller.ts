@@ -31,11 +31,6 @@ export class NomineesController {
     return this.nomineeService.getNominees(getNomineesDto);
   }
 
-  // @Get('winners')
-  // getWinners() {
-  //   return this.nomineeService.getWinners();
-  // }
-
   @Get(':id')
   getNominee(@Param('id') id: string) {
     return this.nomineeService.getNominee(id);

@@ -18,21 +18,16 @@ export class NomineesService {
   }
 
   async getNominees(getNomineesDto: GetNomineesDto) {
-    const nominees = await this.nomineeModel
-      .find()
+    return await this.nomineeModel
+      .find(
+        getNomineesDto.winners === 'true' ? { isWinner: true } : {},
+        'movieTitle isWinner',
+      )
       .skip(getNomineesDto.skip)
-      .limit(getNomineesDto.limit);
-    return nominees.map((nominee) => {
-      return { movieTitle: nominee.movieTitle, isWinner: nominee.isWinner };
-    });
+      .limit(
+        Number(getNomineesDto.limit) || Number(process.env.DEFAULT_LIST_SIZE),
+      );
   }
-
-  // async getWinners() {
-  //   const winners = await this.nomineeModel.find({ isWinner: true });
-  //   return winners.map((winner) => {
-  //     return { movieTitle: winner.movieTitle, isWinner: winner.isWinner };
-  //   });
-  // }
 
   async getNominee(id: string) {
     const foundNominee = await this.nomineeModel.findById(id);
