@@ -9,8 +9,9 @@ import { Nominee, NomineeSchema } from './nominee.schema';
 import { NomineesService } from './nominees.service';
 import { NomineesController } from './nominees.controller';
 import { IdValidatorMiddleware } from 'src/common/middleware/idValidator.middleware';
-import { APP_FILTER } from '@nestjs/core';
+import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { AllExceptionsFilter } from 'src/common/filters/allExceptions.filter';
+import { LoggingInterceptor } from 'src/common/interceptors/logging.interceptor';
 
 @Module({
   imports: [
@@ -27,6 +28,10 @@ import { AllExceptionsFilter } from 'src/common/filters/allExceptions.filter';
     {
       provide: APP_FILTER,
       useClass: AllExceptionsFilter,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: LoggingInterceptor,
     },
   ],
 })
