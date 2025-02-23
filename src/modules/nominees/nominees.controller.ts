@@ -26,6 +26,7 @@ export class NomineesController {
   }
 
   @Get()
+  @UsePipes(new ValidationPipe())
   getNominees(@Query() getNomineesDto: GetNomineesDto) {
     return this.nomineeService.getNominees(getNomineesDto);
   }
