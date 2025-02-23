@@ -18,9 +18,12 @@ export class NomineesService {
   }
 
   async getNominees(getNomineesDto: GetNomineesDto) {
+    const searchPattern = new RegExp(getNomineesDto.search, 'i');
     return await this.nomineeModel
       .find(
-        getNomineesDto.winners === 'true' ? { isWinner: true } : {},
+        getNomineesDto.winners === 'true'
+          ? { movieTitle: searchPattern, isWinner: true }
+          : { movieTitle: searchPattern },
         'movieTitle isWinner',
       )
       .skip(getNomineesDto.skip)

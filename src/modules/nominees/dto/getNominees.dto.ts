@@ -1,5 +1,5 @@
 import { Transform } from 'class-transformer';
-import { IsNumber, IsOptional, Min } from 'class-validator';
+import { IsNumber, IsOptional, IsString, Min } from 'class-validator';
 
 export class GetNomineesDto {
   @IsNumber()
@@ -16,4 +16,8 @@ export class GetNomineesDto {
 
   @IsOptional()
   winners: string;
+
+  @IsString()
+  @IsOptional()
+  search: string;
 }
