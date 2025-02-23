@@ -18,7 +18,7 @@ export class NomineesService {
   }
 
   async getNominees(getNomineesDto: GetNomineesDto) {
-    const searchPattern = new RegExp(getNomineesDto.search, 'i');
+    const searchPattern = new RegExp(getNomineesDto.search!, 'i');
     return await this.nomineeModel
       .find(
         getNomineesDto.winners === 'true'
@@ -26,15 +26,15 @@ export class NomineesService {
           : { movieTitle: searchPattern },
         'movieTitle isWinner',
       )
-      .skip(getNomineesDto.skip)
+      .skip(getNomineesDto.skip!)
       .limit(
         Number(getNomineesDto.limit) || Number(process.env.DEFAULT_LIST_SIZE),
       )
       .sort(
-        ['movieTitle', 'releaseDate', 'isWinner'].includes(getNomineesDto.sort)
+        ['movieTitle', 'releaseDate', 'isWinner'].includes(getNomineesDto.sort!)
           ? getNomineesDto.sort === 'movieTitle'
             ? { [getNomineesDto.sort]: 1 }
-            : { [getNomineesDto.sort]: -1 }
+            : { [getNomineesDto.sort!]: -1 }
           : {},
       );
   }
