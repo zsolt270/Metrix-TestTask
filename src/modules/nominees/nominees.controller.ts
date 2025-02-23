@@ -21,7 +21,6 @@ export class NomineesController {
   @Post()
   @UsePipes(new ValidationPipe())
   createNominee(@Body() createNomineeDto: CreateNomineeDto) {
-    console.log(createNomineeDto);
     return this.nomineeService.createNominee(createNomineeDto);
   }
 

@@ -24,7 +24,7 @@ export class NomineesService {
         getNomineesDto.winners === 'true'
           ? { movieTitle: searchPattern, isWinner: true }
           : { movieTitle: searchPattern },
-        'movieTitle isWinner releaseDate',
+        'movieTitle isWinner',
       )
       .skip(getNomineesDto.skip)
       .limit(

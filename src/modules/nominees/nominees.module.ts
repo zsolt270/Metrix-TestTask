@@ -9,6 +9,8 @@ import { Nominee, NomineeSchema } from './nominee.schema';
 import { NomineesService } from './nominees.service';
 import { NomineesController } from './nominees.controller';
 import { IdValidatorMiddleware } from 'src/common/middleware/idValidator.middleware';
+import { APP_FILTER } from '@nestjs/core';
+import { AllExceptionsFilter } from 'src/common/filters/allExceptions.filter';
 
 @Module({
   imports: [
@@ -20,7 +22,13 @@ import { IdValidatorMiddleware } from 'src/common/middleware/idValidator.middlew
     ]),
   ],
   controllers: [NomineesController],
-  providers: [NomineesService],
+  providers: [
+    NomineesService,
+    {
+      provide: APP_FILTER,
+      useClass: AllExceptionsFilter,
+    },
+  ],
 })
 export class NomineesModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
