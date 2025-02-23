@@ -1,6 +1,6 @@
 # Metrix Hungary tesztfeladat - Balogh Zsolt
 
-Ez a repo tartalmazza a megoldásomat, a Metrix Hungary felvételi feladathoz.
+Ez a repo tartalmazza a megoldásomat, a Metrix Hungary tesztfeladathoz.
 
 ## Követelményeknek
 
