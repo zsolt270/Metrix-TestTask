@@ -24,7 +24,7 @@ npm i
 
 3. Mongodb cluster készítése
 
-4. .env file készítése, server mappán belül az alábbiakkal:
+4. .env file készítése a root directory-n belül, az alábbiakkal:
 
 ```
 PORT = <port number>
