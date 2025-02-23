@@ -20,4 +20,8 @@ export class GetNomineesDto {
   @IsString()
   @IsOptional()
   search: string;
+
+  @IsString()
+  @IsOptional()
+  sort: string;
 }

@@ -24,11 +24,18 @@ export class NomineesService {
         getNomineesDto.winners === 'true'
           ? { movieTitle: searchPattern, isWinner: true }
           : { movieTitle: searchPattern },
-        'movieTitle isWinner',
+        'movieTitle isWinner releaseDate',
       )
       .skip(getNomineesDto.skip)
       .limit(
         Number(getNomineesDto.limit) || Number(process.env.DEFAULT_LIST_SIZE),
+      )
+      .sort(
+        ['movieTitle', 'releaseDate', 'isWinner'].includes(getNomineesDto.sort)
+          ? getNomineesDto.sort === 'movieTitle'
+            ? { [getNomineesDto.sort]: 1 }
+            : { [getNomineesDto.sort]: -1 }
+          : {},
       );
   }
 
